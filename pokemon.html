@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokedex</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <div class="brand">
+          <svg
+            width="30"
+            height="30"
+            viewBox="0 0 100 100"
+            xmlns="http://www.w3.org/2000/svg"
+            class="brand-logo"
+          >
+            <path d="M 10 50 A 40 40 0 0 1 90 50 Z" fill="#ff5555" />
+            <path d="M 10 50 A 40 40 0 0 0 90 50 Z" fill="#ffffff" />
+            <circle
+              cx="50"
+              cy="50"
+              r="40"
+              fill="none"
+              stroke="#ffffff"
+              stroke-width="6"
+            />
+            <line
+              x1="10"
+              y1="50"
+              x2="90"
+              y2="50"
+              stroke="#ffffff"
+              stroke-width="6"
+            />
+            <circle
+              cx="50"
+              cy="50"
+              r="14"
+              fill="#111111"
+              stroke="#ffffff"
+              stroke-width="6"
+            />
+            <circle cx="50" cy="50" r="5" fill="#ffffff" />
+          </svg>
+          <span class="brand-title">Pokedex</span>
+        </div>
+        <div class="search">
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="Search..."
+            autocomplete="off"
+          />
+          <div id="hint" class="hint">Live-Suche</div>
+        </div>
+      </header>
+
+      <main id="pokemon-container" class="grid"></main>
+    </div>
+
+    <div id="modalOverlay" class="overlay hidden">
+      <div class="modal">
+        <button id="modalClose" class="modal-close">✕</button>
+
+        <div class="modal-head">
+          <div class="modal-title">
+            <span id="modalPid" class="pid">#0</span>
+            <span id="modalName" class="pname">Pokemon</span>
+          </div>
+        </div>
+
+        <div id="modalHero" class="modal-hero">
+          <img id="modalImg" class="modal-sprite" alt="" />
+        </div>
+
+        <div class="tabs">
+          <button class="tab active" data-tab="main">Main</button>
+          <button class="tab" data-tab="stats">Stats</button>
+          <button class="tab" data-tab="evo">Evo Chain</button>
+        </div>
+
+        <div class="tabpanes">
+          <section id="pane-main" class="pane active"></section>
+          <section id="pane-stats" class="pane"></section>
+          <section id="pane-evo" class="pane"></section>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
