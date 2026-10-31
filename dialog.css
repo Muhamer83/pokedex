@@ -1,0 +1,110 @@
+.dialog {
+  border: none;
+  border-radius: 15px;
+  padding: 0;
+  width: 90%;
+  max-width: 500px;
+  background: transparent;
+}
+.dialog::backdrop {
+  background: rgba(0, 0, 0, 0.7);
+}
+.dialog-inner {
+  background: white;
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+#closeBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.nav-buttons {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+.nav-buttons button {
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.overlay-content {
+  text-align: center;
+  color: white;
+  border-radius: 15px;
+  overflow: hidden;
+}
+.dialog-title {
+  text-align: left;
+  padding: 15px 20px 0 20px;
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+}
+.overlay-content img {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  z-index: 2;
+  margin-top: -10px;
+}
+
+.stats-box {
+  background-color: #1a2a32;
+  padding: 40px 20px 20px 20px;
+  margin-top: -40px;
+  text-align: left;
+}
+.stats-box p {
+  display: flex;
+  margin: 12px 0;
+  font-size: 16px;
+}
+.label {
+  width: 140px;
+  color: #a0b0b9;
+  font-weight: bold;
+}
+
+.evo-box {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #2a3a42;
+}
+
+.evo-btn {
+  background-color: #2a3a42;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  text-transform: capitalize;
+  margin: 0 5px;
+}
+
+.evo-btn:hover {
+  background-color: #4a5a62;
+}

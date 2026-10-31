@@ -91,42 +91,92 @@ function closeDialog() {
   document.body.classList.remove("no-scroll");
 }
 
+function getAbilities(abilitiesArr) {
+  let result = "";
+  for (let i = 0; i < abilitiesArr.length; i++) {
+    result += abilitiesArr[i].ability.name;
+    if (i < abilitiesArr.length - 1) result += ", ";
+  }
+  return result;
+}
+
 function getDialogHTML(p) {
   let bg = getTypeColor(p.types[0].type.name);
-
+  let ab = getAbilities(p.abilities);
   let html =
     '<div data-id="overlay-pokemon-name" class="overlay-content" style="background-color: ' +
     bg +
     '">';
-  html += "<h2>" + p.name.toUpperCase() + "</h2>";
   html +=
-    '<img data-id="dialog-image" src="' +
-    p.sprites.front_default +
-    '" alt="' +
-    p.name +
-    '">';
+    '<h2 class="dialog-title">#' + p.id + " " + p.name.toUpperCase() + "</h2>";
+  html += '<img data-id="dialog-image" src="' + p.sprites.front_default + '">';
+  html += '<div class="stats-box">';
+  html += '<p><span class="label">Height:</span> ' + p.height / 10 + " m</p>";
+  html += '<p><span class="label">Weight:</span> ' + p.weight / 10 + " kg</p>";
   html +=
-    "<p>Height: " + p.height / 10 + "m | Weight: " + p.weight / 10 + "kg</p>";
-  html += '<div id="lazy-data">Loading extra data...</div>';
-  html += "</div>";
-
+    '<p><span class="label">Base exp:</span> ' + p.base_experience + "</p>";
+  html += '<p><span class="label">Abilities:</span> ' + ab + "</p>";
+  html += '<div id="lazy-data"></div><div id="evo-data"></div></div></div>';
   return html;
 }
 
 async function loadSecondaryData(index) {
   let p = allPokemon[index];
-  let container = document.getElementById("lazy-data");
-
   if (p.cachedHappiness) {
-    container.innerHTML = "Base Happiness: " + p.cachedHappiness;
+    document.getElementById("lazy-data").innerHTML = p.cachedHappiness;
+    if (p.evoData) return renderEvoChain(p.evoData);
     return;
   }
-
   let res = await fetch("https://pokeapi.co/api/v2/pokemon-species/" + p.id);
   let data = await res.json();
+  p.cachedHappiness =
+    "<p><span class='label'>Happiness:</span> " + data.base_happiness + "</p>";
+  document.getElementById("lazy-data").innerHTML = p.cachedHappiness;
+  loadEvoChain(data.evolution_chain.url, p);
+}
 
-  p.cachedHappiness = data.base_happiness;
-  container.innerHTML = "Base Happiness: " + p.cachedHappiness;
+async function loadEvoChain(url, p) {
+  let res = await fetch(url);
+  let data = await res.json();
+  p.evoData = data;
+  renderEvoChain(data);
+}
+
+function renderEvoChain(data) {
+  let html = "<div class='evo-box'><span class='label'>Evolution:</span><br>";
+  html += getEvoBtn(data.chain.species.name);
+
+  if (data.chain.evolves_to.length > 0) {
+    let next1 = data.chain.evolves_to[0];
+    html += " ➔ " + getEvoBtn(next1.species.name);
+
+    if (next1.evolves_to.length > 0) {
+      html += " ➔ " + getEvoBtn(next1.evolves_to[0].species.name);
+    }
+  }
+  document.getElementById("evo-data").innerHTML = html + "</div>";
+}
+
+function getEvoBtn(name) {
+  return (
+    "<button class='evo-btn' onclick='openEvo(\"" +
+    name +
+    "\")'>" +
+    name +
+    "</button>"
+  );
+}
+
+async function openEvo(name) {
+  for (let i = 0; i < allPokemon.length; i++) {
+    if (allPokemon[i].name === name) return openDialog(i);
+  }
+
+  let res = await fetch("https://pokeapi.co/api/v2/pokemon/" + name);
+  let newPokemon = await res.json();
+  allPokemon.push(newPokemon);
+  renderList(allPokemon);
+  openDialog(allPokemon.length - 1);
 }
 
 function nextPokemon() {
