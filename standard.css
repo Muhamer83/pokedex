@@ -1,0 +1,21 @@
+:root {
+  --bg_darkblue_light: #03371f;
+  --accent_orange: #29221d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0 auto;
+  max-width: 1440px;
+  background-color: var(--bg_darkblue_light);
+  color: white;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+header,
+footer {
+  width: 100%;
+}

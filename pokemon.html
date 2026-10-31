@@ -4,60 +4,89 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pokedex</title>
+    <!-- Favicon Platzhalter -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="standard.css" />
   </head>
   <body>
-    <div class="app">
-      <header class="topbar">
-        <div class="brand">
-          <div class="brand">
-            <img src="pokemon.png" alt="Pokemon Logo" class="brand-logo" />
-            <span class="brand-title">Pokedex</span>
-          </div>
-          <span class="brand-title">Pokedex</span>
-        </div>
-        <div class="search">
-          <input
-            id="searchInput"
-            type="text"
-            placeholder="Search..."
-            autocomplete="off"
-          />
-          <div id="hint" class="hint">Live-Suche</div>
-        </div>
-      </header>
-
-      <main id="pokemon-container" class="grid"></main>
-    </div>
-
-    <div id="modalOverlay" class="overlay hidden">
-      <div class="modal">
-        <button id="modalClose" class="modal-close">✕</button>
-
-        <div class="modal-head">
-          <div class="modal-title">
-            <span id="modalPid" class="pid">#0</span>
-            <span id="modalName" class="pname">Pokemon</span>
-          </div>
-        </div>
-
-        <div id="modalHero" class="modal-hero">
-          <img id="modalImg" class="modal-sprite" alt="" />
-        </div>
-
-        <div class="tabs">
-          <button class="tab active" data-tab="main">Main</button>
-          <button class="tab" data-tab="stats">Stats</button>
-          <button class="tab" data-tab="evo">Evo Chain</button>
-        </div>
-
-        <div class="tabpanes">
-          <section id="pane-main" class="pane active"></section>
-          <section id="pane-stats" class="pane"></section>
-          <section id="pane-evo" class="pane"></section>
-        </div>
+    <header class="topbar">
+      <div class="brand">
+        <h1>Pokedex</h1>
       </div>
+      <div class="search-area">
+        <input
+          type="text"
+          id="searchInput"
+          data-id="search-input"
+          placeholder="Min. 3 letters..."
+          oninput="searchPokemon()"
+        />
+        <button
+          data-id="search-button"
+          onclick="searchPokemon()"
+          aria-label="Search Pokemon"
+        >
+          Search
+        </button>
+      </div>
+    </header>
+
+    <main data-id="content">
+      <ul id="pokemon-list" class="grid"></ul>
+
+      <div class="load-area">
+        <button
+          id="loadBtn"
+          data-id="load-more-button"
+          onclick="loadPokemon()"
+          aria-label="Load more Pokemon"
+        >
+          Load More
+        </button>
+      </div>
+    </main>
+
+    <div id="loading-screen" class="loading-screen" style="display: none">
+      <p>Loading...</p>
     </div>
+
+    <dialog
+      id="pokedex-dialog"
+      data-id="dialog"
+      class="dialog"
+      aria-label="Pokemon Details"
+    >
+      <div class="dialog-inner">
+        <button
+          id="closeBtn"
+          data-id="close-dialog-button"
+          onclick="closeDialog()"
+          aria-label="Close dialog"
+        >
+          ✕
+        </button>
+
+        <div class="nav-buttons">
+          <button
+            data-id="prev-button"
+            onclick="prevPokemon()"
+            aria-label="Previous Pokemon"
+          >
+            ◀
+          </button>
+          <button
+            data-id="next-button"
+            onclick="nextPokemon()"
+            aria-label="Next Pokemon"
+          >
+            ▶
+          </button>
+        </div>
+
+        <div id="dialog-content"></div>
+      </div>
+    </dialog>
 
     <script src="script.js"></script>
   </body>
