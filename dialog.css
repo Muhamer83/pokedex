@@ -92,7 +92,6 @@
   padding-top: 15px;
   border-top: 1px solid #2a3a42;
 }
-
 .evo-btn {
   background-color: #2a3a42;
   color: white;
@@ -104,7 +103,31 @@
   text-transform: capitalize;
   margin: 0 5px;
 }
-
 .evo-btn:hover {
   background-color: #4a5a62;
+}
+
+/* Mobile Ansicht */
+@media (max-width: 768px) {
+  .dialog-title {
+    font-size: 18px;
+    padding: 10px 15px 0 15px;
+  }
+  .overlay-content img {
+    width: 150px;
+    height: 150px;
+  }
+  .stats-box {
+    padding: 30px 15px 15px 15px;
+    margin-top: -30px;
+  }
+  .stats-box p {
+    font-size: 14px;
+    flex-direction: column;
+    margin: 8px 0;
+  }
+  .label {
+    width: auto;
+    margin-bottom: 2px;
+  }
 }

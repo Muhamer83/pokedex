@@ -1,4 +1,3 @@
-/* Grundlegende Resets und Body-Styles sind nun in der standard.css */
 .no-scroll {
   overflow: hidden;
 }
@@ -88,6 +87,24 @@ main {
   border-radius: 5px;
 }
 
+.footer {
+  text-align: center;
+  padding: 20px;
+  background-color: var(--accent_orange);
+  color: white;
+  margin-top: 40px;
+}
+.footer p {
+  margin: 5px 0;
+}
+.footer a {
+  color: #ffcb05;
+  text-decoration: none;
+}
+.footer a:hover {
+  text-decoration: underline;
+}
+
 .loading-screen {
   position: fixed;
   top: 0;
@@ -101,4 +118,21 @@ main {
   font-size: 24px;
   z-index: 999;
   color: white;
+}
+
+/* Mobile Ansicht */
+@media (max-width: 768px) {
+  .topbar {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  .search-area {
+    width: 100%;
+    justify-content: center;
+  }
+  .search-area input {
+    width: 100%;
+    max-width: 300px;
+  }
 }

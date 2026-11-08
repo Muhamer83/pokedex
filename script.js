@@ -4,17 +4,22 @@ let isLoading = false;
 let currentIndex = 0;
 
 async function loadPokemon() {
-  if (isLoading === true) return;
+  if (isLoading === true || currentOffset >= 150) return;
   toggleLoading(true);
-
+  let limit = 20;
+  if (currentOffset === 140) limit = 10;
   let url =
-    "https://pokeapi.co/api/v2/pokemon?limit=20&offset=" + currentOffset;
+    "https://pokeapi.co/api/v2/pokemon?limit=" +
+    limit +
+    "&offset=" +
+    currentOffset;
   let res = await fetch(url);
   let data = await res.json();
-
   await fetchBatch(data.results);
-  currentOffset += 20;
+  currentOffset += limit;
   renderList(allPokemon);
+  if (currentOffset >= 150)
+    document.getElementById("loadBtn").style.display = "none";
   toggleLoading(false);
 }
 
@@ -29,20 +34,17 @@ async function fetchBatch(results) {
 function renderList(arrayToRender) {
   let list = document.getElementById("pokemon-list");
   let html = "";
-
   for (let i = 0; i < arrayToRender.length; i++) {
     let p = arrayToRender[i];
     let actualIndex = allPokemon.indexOf(p);
     html += getCardHTML(p, actualIndex);
   }
-
   list.innerHTML = html;
 }
 
 function getCardHTML(p, index) {
   let type = p.types[0].type.name;
   let bg = getTypeColor(type);
-
   let html = '<li class="card-item" style="background-color: ' + bg + '">';
   html +=
     '<button class="card-btn" data-id="card" aria-label="' +
@@ -59,7 +61,6 @@ function getCardHTML(p, index) {
     '">';
   html += "<span>" + type + "</span>";
   html += "</button></li>";
-
   return html;
 }
 
@@ -78,11 +79,9 @@ function openDialog(index) {
   currentIndex = index;
   let p = allPokemon[index];
   let content = document.getElementById("dialog-content");
-
   content.innerHTML = getDialogHTML(p);
   document.getElementById("pokedex-dialog").showModal();
   document.body.classList.add("no-scroll");
-
   loadSecondaryData(index);
 }
 
@@ -113,8 +112,6 @@ function getDialogHTML(p) {
   html += '<div class="stats-box">';
   html += '<p><span class="label">Height:</span> ' + p.height / 10 + " m</p>";
   html += '<p><span class="label">Weight:</span> ' + p.weight / 10 + " kg</p>";
-  html +=
-    '<p><span class="label">Base exp:</span> ' + p.base_experience + "</p>";
   html += '<p><span class="label">Abilities:</span> ' + ab + "</p>";
   html += '<div id="lazy-data"></div><div id="evo-data"></div></div></div>';
   return html;
@@ -145,11 +142,9 @@ async function loadEvoChain(url, p) {
 function renderEvoChain(data) {
   let html = "<div class='evo-box'><span class='label'>Evolution:</span><br>";
   html += getEvoBtn(data.chain.species.name);
-
   if (data.chain.evolves_to.length > 0) {
     let next1 = data.chain.evolves_to[0];
     html += " ➔ " + getEvoBtn(next1.species.name);
-
     if (next1.evolves_to.length > 0) {
       html += " ➔ " + getEvoBtn(next1.evolves_to[0].species.name);
     }
@@ -171,7 +166,6 @@ async function openEvo(name) {
   for (let i = 0; i < allPokemon.length; i++) {
     if (allPokemon[i].name === name) return openDialog(i);
   }
-
   let res = await fetch("https://pokeapi.co/api/v2/pokemon/" + name);
   let newPokemon = await res.json();
   allPokemon.push(newPokemon);
@@ -180,31 +174,25 @@ async function openEvo(name) {
 }
 
 function nextPokemon() {
-  if (currentIndex < allPokemon.length - 1) {
-    openDialog(currentIndex + 1);
-  }
+  if (currentIndex < allPokemon.length - 1) openDialog(currentIndex + 1);
 }
 
 function prevPokemon() {
-  if (currentIndex > 0) {
-    openDialog(currentIndex - 1);
-  }
+  if (currentIndex > 0) openDialog(currentIndex - 1);
 }
 
 function searchPokemon() {
   let input = document.getElementById("searchInput").value.toLowerCase();
   if (input.length < 3) return renderList(allPokemon);
-
-  let foundItems = [];
+  let found = [];
   for (let i = 0; i < allPokemon.length; i++) {
-    if (allPokemon[i].name.includes(input)) foundItems.push(allPokemon[i]);
+    if (allPokemon[i].name.includes(input)) found.push(allPokemon[i]);
   }
-
-  if (foundItems.length === 0) {
+  if (found.length === 0) {
     document.getElementById("pokemon-list").innerHTML =
-      '<p data-id="not-found">No match found.</p>';
+      "<p>No match found.</p>";
   } else {
-    renderList(foundItems);
+    renderList(found);
   }
 }
 
@@ -212,21 +200,14 @@ function toggleLoading(show) {
   isLoading = show;
   let btn = document.getElementById("loadBtn");
   let screen = document.getElementById("loading-screen");
-
-  btn.disabled = show;
-  if (show === true) {
-    screen.style.display = "flex";
-  } else {
-    screen.style.display = "none";
-  }
+  if (btn) btn.disabled = show;
+  screen.style.display = show ? "flex" : "none";
 }
 
 document
   .getElementById("pokedex-dialog")
   .addEventListener("click", function (event) {
-    if (event.target === this) {
-      closeDialog();
-    }
+    if (event.target === this) closeDialog();
   });
 
 loadPokemon();
