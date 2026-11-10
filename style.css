@@ -3,11 +3,17 @@
 }
 
 .topbar {
+  width: 100%;
+  background-color: var(--accent_orange);
+}
+
+.topbar-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  max-width: 1340px;
+  margin: 0 auto;
   padding: 20px;
-  background-color: var(--accent_orange);
 }
 
 .search-area {
@@ -37,8 +43,12 @@
   background-color: #555;
 }
 
-main {
-  padding: 20px;
+main { 
+  padding: 20px; 
+  flex: 1;
+  width: 100%;
+  max-width: 1340px;
+  margin: 0 auto;
 }
 
 .grid {
@@ -120,9 +130,8 @@ main {
   color: white;
 }
 
-/* Mobile Ansicht */
 @media (max-width: 768px) {
-  .topbar {
+  .topbar-content {
     flex-direction: column;
     gap: 15px;
     text-align: center;
