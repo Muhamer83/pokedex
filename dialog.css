@@ -6,14 +6,17 @@
   max-width: 500px;
   background: transparent;
 }
+
 .dialog::backdrop {
   background: rgba(0, 0, 0, 0.7);
 }
+
 .dialog-inner {
   background: white;
   position: relative;
   border-radius: 15px;
   overflow: hidden;
+  min-height: 520px; /* Verhindert das Springen der Box */
 }
 
 #closeBtn {
@@ -39,6 +42,7 @@
   padding: 0 10px;
   z-index: 10;
 }
+
 .nav-buttons button {
   background: rgba(0, 0, 0, 0.5);
   color: white;
@@ -53,7 +57,11 @@
   color: white;
   border-radius: 15px;
   overflow: hidden;
+  min-height: 520px;
+  display: flex;
+  flex-direction: column; /* Ordnet die Elemente untereinander an */
 }
+
 .dialog-title {
   text-align: left;
   padding: 15px 20px 0 20px;
@@ -61,6 +69,7 @@
   font-size: 20px;
   font-weight: bold;
 }
+
 .overlay-content img {
   width: 200px;
   height: 200px;
@@ -74,12 +83,15 @@
   padding: 40px 20px 20px 20px;
   margin-top: -40px;
   text-align: left;
+  flex: 1; /* Zieht den Kasten automatisch bis ganz nach unten */
 }
+
 .stats-box p {
   display: flex;
   margin: 12px 0;
   font-size: 16px;
 }
+
 .label {
   width: 140px;
   color: #a0b0b9;
@@ -91,6 +103,7 @@
   padding-top: 15px;
   border-top: 1px solid #2a3a42;
 }
+
 .evo-btn {
   background-color: #2a3a42;
   color: white;
@@ -102,11 +115,11 @@
   text-transform: capitalize;
   margin: 0 5px;
 }
+
 .evo-btn:hover {
   background-color: #4a5a62;
 }
 
-/* Mobile Ansicht */
 @media (max-width: 768px) {
   .dialog-title {
     font-size: 18px;
