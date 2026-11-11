@@ -3,7 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png">
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png"
+    />
     <title>Pokedex</title>
     <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
     <link rel="stylesheet" href="standard.css" />
@@ -12,24 +16,26 @@
   </head>
   <body>
     <header class="topbar">
-      <div class="brand">
-        <h1>Pokedex</h1>
-      </div>
-      <div class="search-area">
-        <input
-          type="text"
-          id="searchInput"
-          data-id="search-input"
-          placeholder="Min. 3 letters..."
-          oninput="searchPokemon()"
-        />
-        <button
-          data-id="search-button"
-          onclick="searchPokemon()"
-          aria-label="Search Pokemon"
-        >
-          Search
-        </button>
+      <div class="topbar-content">
+        <div class="brand">
+          <h1>Pokedex</h1>
+        </div>
+        <div class="search-area">
+          <input
+            type="text"
+            id="searchInput"
+            data-id="search-input"
+            placeholder="Min. 3 letters..."
+            oninput="searchPokemon()"
+          />
+          <button
+            data-id="search-button"
+            onclick="searchPokemon()"
+            aria-label="Search Pokemon"
+          >
+            Search
+          </button>
+        </div>
       </div>
     </header>
 
