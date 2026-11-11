@@ -44,8 +44,7 @@ function renderList(arrayToRender) {
 
 function getCardHTML(p, index) {
   let type = p.types[0].type.name;
-  let bg = getTypeColor(type);
-  let html = '<li class="card-item" style="background-color: ' + bg + '">';
+  let html = '<li class="card-item type-' + type + '">';
   html +=
     '<button class="card-btn" data-id="card" aria-label="' +
     p.name +
@@ -62,17 +61,6 @@ function getCardHTML(p, index) {
   html += "<span>" + type + "</span>";
   html += "</button></li>";
   return html;
-}
-
-function getTypeColor(type) {
-  if (type === "fire") return "#F08030";
-  if (type === "water") return "#6890F0";
-  if (type === "grass") return "#78C850";
-  if (type === "bug") return "#A8B820";
-  if (type === "normal") return "#A8A878";
-  if (type === "poison") return "#A040A0";
-  if (type === "electric") return "#F8D030";
-  return "#999999";
 }
 
 function openDialog(index) {
@@ -100,11 +88,11 @@ function getAbilities(abilitiesArr) {
 }
 
 function getDialogHTML(p) {
-  let bg = getTypeColor(p.types[0].type.name);
+  let type = p.types[0].type.name;
   let ab = getAbilities(p.abilities);
   let html =
-    '<div data-id="overlay-pokemon-name" class="overlay-content" style="background-color: ' +
-    bg +
+    '<div data-id="overlay-pokemon-name" class="overlay-content type-' +
+    type +
     '">';
   html +=
     '<h2 class="dialog-title">#' + p.id + " " + p.name.toUpperCase() + "</h2>";
@@ -116,19 +104,23 @@ function getDialogHTML(p) {
   html += '<div id="lazy-data"></div><div id="evo-data"></div></div></div>';
   return html;
 }
-
 async function loadSecondaryData(index) {
   let p = allPokemon[index];
+
   if (p.cachedHappiness) {
-    document.getElementById("lazy-data").innerHTML = p.cachedHappiness;
+    document.getElementById("lazy-data").innerHTML =
+      "<p><span class='label'>Happiness:</span> " + p.cachedHappiness + "</p>";
     if (p.evoData) return renderEvoChain(p.evoData);
     return;
   }
+
   let res = await fetch("https://pokeapi.co/api/v2/pokemon-species/" + p.id);
   let data = await res.json();
-  p.cachedHappiness =
-    "<p><span class='label'>Happiness:</span> " + data.base_happiness + "</p>";
-  document.getElementById("lazy-data").innerHTML = p.cachedHappiness;
+
+  p.cachedHappiness = data.base_happiness;
+  document.getElementById("lazy-data").innerHTML =
+    "<p><span class='label'>Happiness:</span> " + p.cachedHappiness + "</p>";
+
   loadEvoChain(data.evolution_chain.url, p);
 }
 
