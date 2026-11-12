@@ -75,7 +75,7 @@
   height: 200px;
   position: relative;
   z-index: 2;
-  margin-top: -10px;
+  margin: 10px auto 30px auto;
 }
 
 .stats-box {
@@ -144,5 +144,9 @@
   }
   .nav-buttons {
     top: 100px;
+  }
+  .dialog-inner,
+  .overlay-content {
+    min-height: 620px;
   }
 }
