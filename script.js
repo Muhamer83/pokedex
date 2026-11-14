@@ -42,27 +42,6 @@ function renderList(arrayToRender) {
   list.innerHTML = html;
 }
 
-function getCardHTML(p, index) {
-  let type = p.types[0].type.name;
-  let html = '<li class="card-item type-' + type + '">';
-  html +=
-    '<button class="card-btn" data-id="card" aria-label="' +
-    p.name +
-    '" onclick="openDialog(' +
-    index +
-    ')">';
-  html += "<span>#" + p.id + " " + p.name.toUpperCase() + "</span>";
-  html +=
-    '<img data-id="card-image" src="' +
-    p.sprites.front_default +
-    '" alt="' +
-    p.name +
-    '">';
-  html += "<span>" + type + "</span>";
-  html += "</button></li>";
-  return html;
-}
-
 function openDialog(index) {
   currentIndex = index;
   let p = allPokemon[index];
@@ -87,23 +66,6 @@ function getAbilities(abilitiesArr) {
   return result;
 }
 
-function getDialogHTML(p) {
-  let type = p.types[0].type.name;
-  let ab = getAbilities(p.abilities);
-  let html =
-    '<div data-id="overlay-pokemon-name" class="overlay-content type-' +
-    type +
-    '">';
-  html +=
-    '<h2 class="dialog-title">#' + p.id + " " + p.name.toUpperCase() + "</h2>";
-  html += '<img data-id="dialog-image" src="' + p.sprites.front_default + '">';
-  html += '<div class="stats-box">';
-  html += '<p><span class="label">Height:</span> ' + p.height / 10 + " m</p>";
-  html += '<p><span class="label">Weight:</span> ' + p.weight / 10 + " kg</p>";
-  html += '<p><span class="label">Abilities:</span> ' + ab + "</p>";
-  html += '<div id="lazy-data"></div><div id="evo-data"></div></div></div>';
-  return html;
-}
 async function loadSecondaryData(index) {
   let p = allPokemon[index];
 
