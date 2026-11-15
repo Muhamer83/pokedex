@@ -137,11 +137,22 @@ function prevPokemon() {
 
 function searchPokemon() {
   let input = document.getElementById("searchInput").value.toLowerCase();
-  if (input.length < 3) return renderList(allPokemon);
+  let btn = document.getElementById("loadBtn");
+
+  if (input.length < 3) {
+    if (currentOffset < 150) {
+      btn.style.display = "";
+    }
+    return renderList(allPokemon);
+  }
+
+  btn.style.display = "none";
+
   let found = [];
   for (let i = 0; i < allPokemon.length; i++) {
     if (allPokemon[i].name.includes(input)) found.push(allPokemon[i]);
   }
+
   if (found.length === 0) {
     document.getElementById("pokemon-list").innerHTML =
       "<p>No match found.</p>";
@@ -163,5 +174,18 @@ document
   .addEventListener("click", function (event) {
     if (event.target === this) closeDialog();
   });
+
+document.onkeydown = function (event) {
+  let dialog = document.getElementById("pokedex-dialog");
+
+  if (dialog.open === true) {
+    if (event.key === "ArrowRight") {
+      nextPokemon();
+    }
+    if (event.key === "ArrowLeft") {
+      prevPokemon();
+    }
+  }
+};
 
 loadPokemon();
